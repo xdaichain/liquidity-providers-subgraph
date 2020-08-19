@@ -1,0 +1,1 @@
+Easy Staking subgraph

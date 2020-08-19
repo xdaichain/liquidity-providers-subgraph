@@ -1,0 +1,10 @@
+type LiquidityProvider @entity {
+  id: ID!
+  address: Bytes!
+  balance: BigInt!
+}
+
+type CommonData @entity {
+  id: ID!
+  totalSupply: BigInt!
+}
