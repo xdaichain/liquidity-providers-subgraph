@@ -1,6 +1,7 @@
 import { BigInt, Address, store, log } from '@graphprotocol/graph-ts';
-import { Contract, Transfer } from '../generated/Contract/Contract';
-import { LiquidityProvider, CommonData } from '../generated/schema';
+import { LiquidityToken, Transfer } from '../generated/LiquidityToken/LiquidityToken';
+import { Distribution, Distributed } from '../generated/Distribution/Distribution';
+import { LiquidityProvider, CommonData, Round } from '../generated/schema';
 
 function updateBalance(address: Address, value: BigInt, increase: boolean): void {
   if (address.toHexString() == '0x0000000000000000000000000000000000000000') return;
@@ -19,7 +20,7 @@ function updateBalance(address: Address, value: BigInt, increase: boolean): void
   }
 }
 
-function updateTotalSupply(contract: Contract): void {
+function updateTotalSupply(contract: LiquidityToken): void {
   let commonData = CommonData.load('common');
   if (commonData == null) {
     commonData = new CommonData('common');
@@ -30,8 +31,19 @@ function updateTotalSupply(contract: Contract): void {
 }
 
 export function handleTransfer(event: Transfer): void {
-  let contract = Contract.bind(event.address);
+  let contract = LiquidityToken.bind(event.address);
   updateBalance(event.params.from, event.params.value, false);
   updateBalance(event.params.to, event.params.value, true);
   updateTotalSupply(contract);
+}
+
+export function handleDistributed(event: Distributed): void {
+  let id = event.transaction.hash.toHex();
+  let round = new Round(id);
+  round.pool = event.params.pool;
+  round.snapshotBlockNumber = event.params.snapshotBlockNumber;
+  round.numberOfRewards = event.params.numberOfRewards;
+  round.total = event.params.total;
+  round.fee = event.params.fee;
+  round.save();
 }

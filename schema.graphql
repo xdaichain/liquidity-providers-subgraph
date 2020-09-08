@@ -8,3 +8,16 @@ type CommonData @entity {
   id: ID!
   totalSupply: BigInt!
 }
+
+type Round @entity {
+  id: ID!
+  pool: Pool!
+  snapshotBlockNumber: BigInt!
+  numberOfRewards: BigInt!
+  total: BigInt!
+  fee: BigInt!
+}
+
+enum Pool {
+  uniswap
+}

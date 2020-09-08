@@ -1,1 +1,1 @@
-Easy Staking subgraph
+STAKE Liquidity Providers subgraph
