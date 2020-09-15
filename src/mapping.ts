@@ -3,6 +3,10 @@ import { LiquidityToken, Transfer } from '../generated/LiquidityToken/LiquidityT
 import { Distribution, Distributed } from '../generated/Distribution/Distribution';
 import { LiquidityProvider, CommonData, Round } from '../generated/schema';
 
+let vampireAttackContracts: Array<string> = [
+  '0x0ec1f1573f3a2db0ad396c843e6a079e2a53e557', // Sake
+];
+
 function updateBalance(address: Address, value: BigInt, increase: boolean): void {
   if (address.toHexString() == '0x0000000000000000000000000000000000000000') return;
   let id = address.toHex();
@@ -32,8 +36,13 @@ function updateTotalSupply(contract: LiquidityToken): void {
 
 export function handleTransfer(event: Transfer): void {
   let contract = LiquidityToken.bind(event.address);
-  updateBalance(event.params.from, event.params.value, false);
-  updateBalance(event.params.to, event.params.value, true);
+  if (
+    !vampireAttackContracts.includes(event.params.from.toHexString()) &&
+    !vampireAttackContracts.includes(event.params.to.toHexString())
+  ) {
+    updateBalance(event.params.from, event.params.value, false);
+    updateBalance(event.params.to, event.params.value, true);
+  }
   updateTotalSupply(contract);
 }
 
