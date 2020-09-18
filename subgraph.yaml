@@ -18,6 +18,8 @@ dataSources:
       abis:
         - name: LiquidityToken
           file: ./abis/LiquidityToken.json
+        - name: AddressChecker
+          file: ./abis/AddressChecker.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer

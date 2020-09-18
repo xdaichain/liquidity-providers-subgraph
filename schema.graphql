@@ -2,6 +2,7 @@ type LiquidityProvider @entity {
   id: ID!
   address: Bytes!
   balance: BigInt!
+  isContract: Boolean!
 }
 
 type CommonData @entity {
