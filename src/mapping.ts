@@ -5,11 +5,13 @@ import { Distributed } from '../generated/Distribution/Distribution';
 import { LiquidityProvider, CommonData, Round } from '../generated/schema';
 
 let vampireAttackContracts: Array<string> = [
-  '0x0ec1f1573f3a2db0ad396c843e6a079e2a53e557', // Sake
+  '0x4e0dede6cafe84d8ba2a1036b7bbaef3be8876fa', // Lord Joker
+  '0x12f5126a859ee926b598f3c76d25c05ae441686a', // MasterChef
+  '0x3b49ddffca8110f9c635792c8a02592a0bc9db50', // SleepBedroom
 ];
 
-const addressCheckerAddress = Address.fromString('0xe46ec14432033ede29343e9692a32c9adc314271');
-const addressCheckerBlockNumber = BigInt.fromI32(10866458);
+let addressCheckerAddress = Address.fromString('0xe46ec14432033ede29343e9692a32c9adc314271');
+let addressCheckerBlockNumber = BigInt.fromI32(10866458);
 
 function updateBalance(address: Address, value: BigInt, increase: boolean, blockNumber: BigInt): void {
   if (address.toHexString() == '0x0000000000000000000000000000000000000000') return;
@@ -27,11 +29,7 @@ function updateBalance(address: Address, value: BigInt, increase: boolean, block
     liquidityProvider.isContract = isContract;
   }
   liquidityProvider.balance = increase ? liquidityProvider.balance.plus(value) : liquidityProvider.balance.minus(value);
-  if (liquidityProvider.balance.isZero()) {
-    store.remove('LiquidityProvider', id);
-  } else {
-    liquidityProvider.save();
-  }
+  liquidityProvider.save();
 }
 
 function updateTotalSupply(contract: LiquidityToken): void {
