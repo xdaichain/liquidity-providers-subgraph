@@ -8,6 +8,8 @@ let vampireAttackContracts: Array<string> = [
   '0x4e0dede6cafe84d8ba2a1036b7bbaef3be8876fa', // Lord Joker
   '0x12f5126a859ee926b598f3c76d25c05ae441686a', // MasterChef
   '0x3b49ddffca8110f9c635792c8a02592a0bc9db50', // SleepBedroom
+  '0xbd530a1c060dc600b951f16dc656e4ea451d1a2d', // BaoMasterFarmer
+  '0x02444a8feead1a2e78da0e2a157f4c7b848ab021', // BaoMasterFarmer
 ];
 
 let addressCheckerAddress = Address.fromString('0xe46ec14432033ede29343e9692a32c9adc314271');
